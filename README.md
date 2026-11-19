@@ -14,7 +14,11 @@ Static HTML/CSS/JS with one serverless function. No build step. Hosted on Vercel
 
    Until these are set, submissions are still recorded in the function logs (Vercel → Logs) so nothing is lost.
 2. **Clinic WhatsApp.** Set `whatsapp` in `HH_CONFIG` at the top of `assets/common.js` (digits only, e.g. `923001234567`). Customers then get a one-tap "Send on WhatsApp" after booking or ordering.
-3. **Fill in the details** shown in `[BRACKETS]` across the pages: phone, email, address, hours, registration number, ingredients, pack sizes and policy periods. Search the repo for `[`.
+3. **Replace the sample data.** The site ships with realistic sample details so every page looks finished. Replace them with the real ones:
+   - Phone/WhatsApp `+92 300 0000000` and email `hello@healandherbs.pk`
+   - Address `Office 4, Al-Rehman Plaza, Blue Area, Islamabad` and hours `Mon–Sat, 10:00–19:00`
+   - Product prices, pack sizes, ingredients, percentages and directions (Cedar and Meher especially)
+   - Delivery times, refund and cancellation periods in the policy pages
 4. **Domain.** Add it in Vercel → Project → Settings → Domains, then replace `https://heal-and-herbs.vercel.app` with your domain in the HTML files, `sitemap.xml` and `robots.txt`.
 5. **Policies.** Review `privacy.html`, `terms.html`, `refunds.html` and `delivery.html` with your own adviser.
 
