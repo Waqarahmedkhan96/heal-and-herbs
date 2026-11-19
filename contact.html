@@ -13,21 +13,28 @@
 <meta property="og:description" content="Contact the Heal &amp; Herbs clinic about orders, formulations or consultations.">
 <meta property="og:url" content="https://heal-and-herbs.vercel.app/contact">
 <meta property="og:image" content="https://heal-and-herbs.vercel.app/images/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "HealthAndBeautyBusiness", "name": "Heal & Herbs", "alternateName": "Heal & Herbs by Haroon Ur Rasheed", "url": "https://heal-and-herbs.vercel.app/", "logo": "https://heal-and-herbs.vercel.app/images/logo.png", "image": "https://heal-and-herbs.vercel.app/images/og.jpg", "priceRange": "PKR 1,250 – 9,999", "areaServed": "PK", "founder": {"@type": "Person", "name": "Haroon Ur Rasheed", "honorificSuffix": "FTJ"}}</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&amp;family=Instrument+Sans:wght@400;500;600&amp;family=Noto+Nastaliq+Urdu&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&amp;display=swap&amp;text=%D8%8C%D8%A7%D8%A8%D8%AA%D8%AF%D8%B1%D8%B3%D8%B7%D9%81%D9%84%D9%85%D9%86%D9%88%D9%90%D9%BE%DA%A9%DA%AF%DA%BE%DB%81%DB%8C%20%D8%8C%C2%B7" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
 <div id="app">
 <div class="hh">
+<a class="skip" href="#main">Skip to content</a>
 <div class="ann">Private consultations from PKR 4,999 on Google Meet, Zoom or WhatsApp · <a href="/book">Book a call</a></div>
 <header class="hdr">
 <div class="wrap hdr-in">
-<a href="/" class="logo" aria-label="Heal &amp; Herbs, home"><img src="/images/logo.webp" alt="Heal &amp; Herbs"></a>
+<a href="/" class="logo" aria-label="Heal &amp; Herbs, home"><img decoding="async" src="/images/logo.webp" alt="Heal &amp; Herbs"></a>
 <nav class="navlinks" aria-label="Main">
 <a href="/">Home</a>
 <a href="/about">About Haroon</a>
@@ -43,7 +50,7 @@
 </div>
 
 </header>
-<main>
+<main id="main">
 <section class="wrap" style="padding-top: 24px; padding-bottom: 56px">
 <p class="eyebrow">Contact</p>
 <h1 class="h1" style="margin-top: 12px; font-size: clamp(36px, 7vw, 60px)">Get in touch</h1>
@@ -60,6 +67,7 @@
 <div class="grid g2">
 <div><label for="c-n">Name</label><input id="c-n" type="text" autocomplete="name"></div>
 <div><label for="c-p">Phone or email</label><input id="c-p" type="text"></div>
+<div style="position: absolute; left: -9999px" aria-hidden="true"><label for="c-co">Company</label><input id="c-co" type="text" tabindex="-1" autocomplete="off"></div>
 <div style="grid-column: 1 / -1"><label for="c-s">Subject</label><select id="c-s"><option>An order</option><option>A formulation</option><option>Wholesale / stockists</option><option>Something else</option></select></div>
 <div style="grid-column: 1 / -1"><label for="c-m">Message</label><textarea id="c-m" rows="5"></textarea></div>
 </div>
@@ -98,7 +106,7 @@
 </div>
 <div class="ftr-bottom">
 <p style="margin: 0; max-width: 720px">Information on this site describes traditional Unani practice and is general in nature. It is not a diagnosis and does not replace care from your doctor. Herbal products are not intended to diagnose, treat, cure or prevent any disease.</p>
-<p style="margin: 0">© 2026 Heal &amp; Herbs</p>
+<p style="margin: 0; display: flex; flex-wrap: wrap; gap: 6px 16px"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/refunds">Refunds &amp; cancellations</a><a href="/delivery">Delivery</a><span>© 2026 Heal &amp; Herbs</span></p>
 </div>
 </div>
 </footer>
@@ -106,10 +114,11 @@
 </div>
 <template id="view">
 <div class="hh">
+<a class="skip" href="#main">Skip to content</a>
 <div class="ann">Private consultations from PKR 4,999 on Google Meet, Zoom or WhatsApp · <a href="/book">Book a call</a></div>
 <header class="hdr">
 <div class="wrap hdr-in">
-<a href="/" class="logo" aria-label="Heal &amp; Herbs, home"><img src="/images/logo.webp" alt="Heal &amp; Herbs"></a>
+<a href="/" class="logo" aria-label="Heal &amp; Herbs, home"><img decoding="async" src="/images/logo.webp" alt="Heal &amp; Herbs"></a>
 <nav class="navlinks" aria-label="Main">
 <a href="/">Home</a>
 <a href="/about">About Haroon</a>
@@ -134,7 +143,7 @@
 </nav>
 </hh-if>
 </header>
-<main>
+<main id="main">
 <section class="wrap" style="padding-top: 24px; padding-bottom: 56px">
 <p class="eyebrow">Contact</p>
 <h1 class="h1" style="margin-top: 12px; font-size: clamp(36px, 7vw, 60px)">Get in touch</h1>
@@ -151,7 +160,8 @@
 <div class="grid g2">
 <div><label for="c-n">Name</label><input id="c-n" type="text" autocomplete="name" value="{{name}}" onChange="{{onName}}"></div>
 <div><label for="c-p">Phone or email</label><input id="c-p" type="text" value="{{reach}}" onChange="{{onReach}}"></div>
-<div style="grid-column: 1 / -1"><label for="c-s">Subject</label><select id="c-s"><option>An order</option><option>A formulation</option><option>Wholesale / stockists</option><option>Something else</option></select></div>
+<div style="position: absolute; left: -9999px" aria-hidden="true"><label for="c-co">Company</label><input id="c-co" type="text" tabindex="-1" autocomplete="off" value="{{hp}}" onChange="{{onHp}}"></div>
+<div style="grid-column: 1 / -1"><label for="c-s">Subject</label><select id="c-s" value="{{subject}}" onChange="{{onSubject}}"><option>An order</option><option>A formulation</option><option>Wholesale / stockists</option><option>Something else</option></select></div>
 <div style="grid-column: 1 / -1"><label for="c-m">Message</label><textarea id="c-m" rows="5" value="{{msg}}" onChange="{{onMsg}}"></textarea></div>
 </div>
 <hh-if value="{{hasErr}}"><p class="err" role="alert">Please add your name, a way to reach you, and a message.</p></hh-if>
@@ -189,7 +199,7 @@
 </div>
 <div class="ftr-bottom">
 <p style="margin: 0; max-width: 720px">Information on this site describes traditional Unani practice and is general in nature. It is not a diagnosis and does not replace care from your doctor. Herbal products are not intended to diagnose, treat, cure or prevent any disease.</p>
-<p style="margin: 0">© 2026 Heal &amp; Herbs</p>
+<p style="margin: 0; display: flex; flex-wrap: wrap; gap: 6px 16px"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/refunds">Refunds &amp; cancellations</a><a href="/delivery">Delivery</a><span>© 2026 Heal &amp; Herbs</span></p>
 </div>
 </div>
 </footer>

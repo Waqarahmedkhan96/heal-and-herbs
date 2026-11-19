@@ -8,7 +8,9 @@ class Page extends View {
       onName: function (e) { self.setState({ name: e.target.value }); },
       onReach: function (e) { self.setState({ reach: e.target.value }); },
       onMsg: function (e) { self.setState({ msg: e.target.value }); },
-      send: function () { if (bad) { self.setState({ tried: true }); return; } self.setState({ sent: true }); }
+      subject: s.subject || 'An order', onSubject: function (e) { self.setState({ subject: e.target.value }); },
+      hp: s.hp || '', onHp: function (e) { self.setState({ hp: e.target.value }); },
+      send: function () { if (bad) { self.setState({ tried: true }); return; } self._submit('message', { name: s.name.trim(), reach: s.reach.trim(), subject: s.subject || 'An order', message: s.msg.trim(), hp: s.hp || '' }); self.setState({ sent: true }); }
     });
   }
 }

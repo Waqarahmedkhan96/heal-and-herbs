@@ -1,4 +1,11 @@
 /* Heal & Herbs — shared data and helpers */
+// Site settings — edit these before launch.
+var HH_CONFIG = {
+  paymentsLive: false,        // true once a payment gateway is connected
+  whatsapp: '',               // clinic WhatsApp in international format, digits only, e.g. '923001234567'
+  submitUrl: '/api/submit',   // receives bookings, orders and messages
+  responseTime: '[RESPONSE TIME]'
+};
 var HH_PRODUCTS = {"cedar": {"name": "Cedar", "sub": "Men’s blend · [NUMBER] capsules", "price": 3499, "img": "/images/products/cedar.webp", "href": "/cedar", "urdu": "دیودار", "tile": "#DCE4D4", "tag": "For men", "cat": "blends", "ticks": ["Formulated by Haroon", "Daily capsule routine", "Full ingredients on pack"]}, "meher": {"name": "Meher", "sub": "Women’s blend · [NUMBER] capsules", "price": 3499, "img": "/images/products/meher.webp", "href": "/meher", "urdu": "مہر", "tile": "#F2E2D6", "tag": "For women", "cat": "blends", "ticks": ["Formulated by Haroon", "Daily capsule routine", "Full ingredients on pack"]}, "saath": {"name": "Saath Duo Set", "sub": "Cedar + Meher gift box", "price": 6499, "was": 6998, "img": "/images/products/saath.webp", "href": "/saath", "urdu": "ساتھ", "tile": "#EFE7D8", "tag": "Best value", "cat": "sets", "ticks": ["One Cedar + one Meher", "For couples, side by side", "Gift-ready box"]}, "fennel": {"name": "Fennel & Rose", "sub": "Herbal infusion · [WEIGHT] g tin", "price": 1450, "img": "/images/products/fennel.webp", "href": "/fennel-rose", "urdu": "سونف، گلاب", "tile": "#F0E8DA", "tag": "Caffeine-free", "cat": "teas", "ticks": ["Fennel seed & Damask rose", "After-meal infusion", "Loose blend tin"]}, "golden": {"name": "Golden Root", "sub": "Turmeric & ginger · [WEIGHT] g jar", "price": 1850, "img": "/images/products/golden.webp", "href": "/golden-root", "urdu": "ہلدی، ادرک", "tile": "#F4E5D2", "tag": "Kitchen staple", "cat": "teas", "ticks": ["Turmeric & ginger root", "For warm milk or cooking", "Fine powder"]}, "mint": {"name": "Mint Garden", "sub": "Peppermint tea · [NUMBER] sachets", "price": 1250, "img": "/images/products/mint.webp", "href": "/mint-garden", "urdu": "پودینہ", "tile": "#E3EADC", "tag": "Sachets", "cat": "teas", "ticks": ["Whole-leaf peppermint", "Caffeine-free", "Easy single sachets"]}};
 function hhPkr(n) { return 'PKR ' + Number(n || 0).toLocaleString('en-US'); }
 function hhPad(n) { return (n < 10 ? '0' : '') + n; }
@@ -20,6 +27,15 @@ var HH_MIXIN = {
       nlEmail: nl, nlDone: !!s.nlDone, nlOpen: !s.nlDone, nlBad: !!s.nlTried && !nlOk,
       onNl: function (e) { self.setState({ nlEmail: e.target.value }); },
       nlSubmit: function () { if (!nlOk) { self.setState({ nlTried: true }); return; } self.setState({ nlDone: true }); } };
+  },
+  _submit: function (kind, data) {
+    try {
+      return fetch(HH_CONFIG.submitUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kind: kind, data: data }), keepalive: true })
+        .then(function (r) { return r.ok; }).catch(function () { return false; });
+    } catch (e) { return Promise.resolve(false); }
+  },
+  _waUrl: function (text) {
+    return HH_CONFIG.whatsapp ? 'https://wa.me/' + HH_CONFIG.whatsapp + '?text=' + encodeURIComponent(text) : '';
   },
   _addToCart: function (id, q) {
     var c = this._store('hh_cart', {}) || {};

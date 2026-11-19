@@ -13,21 +13,29 @@
 <meta property="og:description" content="Book a 30-minute (PKR 4,999) or 60-minute (PKR 9,999) Unani consultation on Google Meet, Zoom or WhatsApp.">
 <meta property="og:url" content="https://heal-and-herbs.vercel.app/book">
 <meta property="og:image" content="https://heal-and-herbs.vercel.app/images/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "HealthAndBeautyBusiness", "name": "Heal & Herbs", "alternateName": "Heal & Herbs by Haroon Ur Rasheed", "url": "https://heal-and-herbs.vercel.app/", "logo": "https://heal-and-herbs.vercel.app/images/logo.png", "image": "https://heal-and-herbs.vercel.app/images/og.jpg", "priceRange": "PKR 1,250 – 9,999", "areaServed": "PK", "founder": {"@type": "Person", "name": "Haroon Ur Rasheed", "honorificSuffix": "FTJ"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Service", "name": "Unani consultation with Haroon Ur Rasheed", "provider": {"@type": "Person", "name": "Haroon Ur Rasheed"}, "areaServed": "PK", "url": "https://heal-and-herbs.vercel.app/book", "offers": [{"@type": "Offer", "name": "30-minute consultation", "price": "4999", "priceCurrency": "PKR"}, {"@type": "Offer", "name": "60-minute consultation", "price": "9999", "priceCurrency": "PKR"}]}</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&amp;family=Instrument+Sans:wght@400;500;600&amp;family=Noto+Nastaliq+Urdu&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&amp;display=swap&amp;text=%D8%8C%D8%A7%D8%A8%D8%AA%D8%AF%D8%B1%D8%B3%D8%B7%D9%81%D9%84%D9%85%D9%86%D9%88%D9%90%D9%BE%DA%A9%DA%AF%DA%BE%DB%81%DB%8C%20%D8%8C%C2%B7" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
 <div id="app">
 <div class="hh">
+<a class="skip" href="#main">Skip to content</a>
 <div class="ann">Private consultations from PKR 4,999 on Google Meet, Zoom or WhatsApp · <a href="/book">Book a call</a></div>
 <header class="hdr">
 <div class="wrap hdr-in">
-<a href="/" class="logo" aria-label="Heal &amp; Herbs, home"><img src="/images/logo.webp" alt="Heal &amp; Herbs"></a>
+<a href="/" class="logo" aria-label="Heal &amp; Herbs, home"><img decoding="async" src="/images/logo.webp" alt="Heal &amp; Herbs"></a>
 <nav class="navlinks" aria-label="Main">
 <a href="/">Home</a>
 <a href="/about">About Haroon</a>
@@ -43,7 +51,7 @@
 </div>
 
 </header>
-<main>
+<main id="main">
 <section class="wrap" style="padding-top: 24px; padding-bottom: 56px">
 
 <p class="eyebrow">Book a consultation</p>
@@ -112,7 +120,7 @@
 <aside class="sticky" aria-label="Booking summary">
 <div class="card">
 <div style="display: flex; gap: 12px; align-items: center">
-<img src="/images/haroon-charcoal.jpg" alt="" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; object-position: center 22%">
+<img loading="lazy" decoding="async" src="/images/haroon-charcoal.jpg" alt="" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; object-position: center 22%">
 <div><p style="margin: 0; font-weight: 600; color: #193E33">Haroon Ur Rasheed, FTJ</p><p class="muted" style="margin: 0; font-size: 13px">Unani consultation</p></div>
 </div>
 <dl style="margin: 16px 0 0">
@@ -151,7 +159,7 @@
 </div>
 <div class="ftr-bottom">
 <p style="margin: 0; max-width: 720px">Information on this site describes traditional Unani practice and is general in nature. It is not a diagnosis and does not replace care from your doctor. Herbal products are not intended to diagnose, treat, cure or prevent any disease.</p>
-<p style="margin: 0">© 2026 Heal &amp; Herbs</p>
+<p style="margin: 0; display: flex; flex-wrap: wrap; gap: 6px 16px"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/refunds">Refunds &amp; cancellations</a><a href="/delivery">Delivery</a><span>© 2026 Heal &amp; Herbs</span></p>
 </div>
 </div>
 </footer>
@@ -159,10 +167,11 @@
 </div>
 <template id="view">
 <div class="hh">
+<a class="skip" href="#main">Skip to content</a>
 <div class="ann">Private consultations from PKR 4,999 on Google Meet, Zoom or WhatsApp · <a href="/book">Book a call</a></div>
 <header class="hdr">
 <div class="wrap hdr-in">
-<a href="/" class="logo" aria-label="Heal &amp; Herbs, home"><img src="/images/logo.webp" alt="Heal &amp; Herbs"></a>
+<a href="/" class="logo" aria-label="Heal &amp; Herbs, home"><img decoding="async" src="/images/logo.webp" alt="Heal &amp; Herbs"></a>
 <nav class="navlinks" aria-label="Main">
 <a href="/">Home</a>
 <a href="/about">About Haroon</a>
@@ -187,7 +196,7 @@
 </nav>
 </hh-if>
 </header>
-<main>
+<main id="main">
 <section class="wrap" style="padding-top: 24px; padding-bottom: 56px">
 <hh-if value="{{notDone}}">
 <p class="eyebrow">Book a consultation</p>
@@ -256,6 +265,7 @@
 <h2 class="h3" style="font-size: 26px">Your details</h2>
 <p class="muted" style="margin: 4px 0 18px; font-size: 14px">Only Haroon and the clinic see this.</p>
 <div class="grid g2">
+<div style="position: absolute; left: -9999px" aria-hidden="true"><label for="bk-co">Company</label><input id="bk-co" type="text" tabindex="-1" autocomplete="off" value="{{hp}}" onChange="{{onHp}}"></div>
 <div><label for="bk-name">Full name</label><input id="bk-name" type="text" autocomplete="name" value="{{name}}" onChange="{{onName}}"><hh-if value="{{hasEName}}"><p class="err">{{eName}}</p></hh-if></div>
 <div><label for="bk-phone">{{phoneLabel}}</label><input id="bk-phone" type="tel" autocomplete="tel" placeholder="+92 3XX XXXXXXX" value="{{phone}}" onChange="{{onPhone}}"><hh-if value="{{hasEPhone}}"><p class="err">{{ePhone}}</p></hh-if></div>
 <div><label for="bk-email">{{emailLabel}}</label><input id="bk-email" type="email" autocomplete="email" value="{{email}}" onChange="{{onEmail}}"><hh-if value="{{hasEEmail}}"><p class="err">{{eEmail}}</p></hh-if></div>
@@ -270,8 +280,8 @@
 </hh-if>
 
 <hh-if value="{{s4}}">
-<h2 class="h3" style="font-size: 26px">Payment</h2>
-<p class="muted" style="margin: 4px 0 16px; font-size: 14px">Your slot is held for 10 minutes while you pay.</p>
+<h2 class="h3" style="font-size: 26px">{{payTitle}}</h2>
+<p class="muted" style="margin: 4px 0 16px; font-size: 14px">{{payNote}}</p>
 <div class="grid g2" role="radiogroup" aria-label="Payment method">
 <hh-for list="{{payments}}" as="pm">
 <button type="button" role="radio" aria-checked="{{pm.checked}}" class="{{pm.cls}}" onClick="{{pm.pick}}"><span><strong style="display: block; color: #193E33">{{pm.name}}</strong><span class="muted" style="font-size: 13px">{{pm.desc}}</span></span><span class="radio"></span></button>
@@ -279,14 +289,14 @@
 </div>
 <hh-if value="{{hasE4}}"><p class="err" role="alert">{{e4}}</p></hh-if>
 <div class="card card-sage" style="margin-top: 18px; padding: 16px 18px; font-size: 14px; color: #33403A">Reschedule free of charge up to [HOURS] hours before your call. [CANCELLATION &amp; REFUND POLICY]</div>
-<div style="margin-top: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px"><button type="button" class="btn-text" onClick="{{back}}">Back</button><button type="button" class="btn" onClick="{{confirm}}">Pay {{total}} &amp; confirm</button></div>
+<div style="margin-top: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px"><button type="button" class="btn-text" onClick="{{back}}">Back</button><button type="button" class="btn" onClick="{{confirm}}" disabled="{{sending}}">{{confirmLabel}}</button></div>
 </hh-if>
 </div>
 
 <aside class="sticky" aria-label="Booking summary">
 <div class="card">
 <div style="display: flex; gap: 12px; align-items: center">
-<img src="/images/haroon-charcoal.jpg" alt="" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; object-position: center 22%">
+<img loading="lazy" decoding="async" src="/images/haroon-charcoal.jpg" alt="" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; object-position: center 22%">
 <div><p style="margin: 0; font-weight: 600; color: #193E33">Haroon Ur Rasheed, FTJ</p><p class="muted" style="margin: 0; font-size: 13px">Unani consultation</p></div>
 </div>
 <dl style="margin: 16px 0 0">
@@ -306,16 +316,17 @@
 <div style="max-width: 720px; margin: 0 auto">
 <div class="card" style="text-align: center; padding-top: 36px; padding-bottom: 36px">
 <span class="icon-circle" style="width: 64px; height: 64px; background: #193E33; color: #F7F4EB"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
-<h1 class="h2" style="margin-top: 18px">You’re booked, {{firstName}}.</h1>
-<p class="muted" style="margin: 10px auto 0; max-width: 30em">Booking reference <strong style="color: #193E33">{{ref}}</strong>. A confirmation is on its way{{sentTo}}.</p>
+<h1 class="h2" style="margin-top: 18px">{{doneTitle}}</h1>
+<p class="muted" style="margin: 10px auto 0; max-width: 32em">Reference <strong style="color: #193E33">{{ref}}</strong>. {{doneNote}}</p>
 <dl style="margin: 24px 0 0; text-align: left">
 <div class="sum-row"><dt>Consultation</dt><dd>{{sumPlan}} · {{sumPlatform}}</dd></div>
 <div class="sum-row"><dt>When</dt><dd>{{sumWhen}} PKT</dd></div>
-<div class="sum-row"><dt>Paid</dt><dd>{{total}} · {{payName}}</dd></div>
+<div class="sum-row"><dt>{{paidLabel}}</dt><dd>{{total}} · {{payName}}</dd></div>
 </dl>
 <div style="margin-top: 20px; padding: 16px 18px; border-radius: 18px; background: #EEF2EA; text-align: left; font-size: 15px; color: #193E33">{{nextSteps}}</div>
 <div style="margin-top: 22px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center">
-<a href="{{calUrl}}" target="_blank" rel="noopener" class="btn">Add to Google Calendar</a>
+<hh-if value="{{hasWa}}"><a href="{{waUrl}}" target="_blank" rel="noopener" class="btn">Send on WhatsApp</a></hh-if>
+<a href="{{calUrl}}" target="_blank" rel="noopener" class="btn btn-ghost">Add to Google Calendar</a>
 <a href="/#shop" class="btn btn-ghost">Browse formulations</a>
 </div>
 <button type="button" class="btn-text" style="margin-top: 14px" onClick="{{restart}}">Book another call</button>
@@ -344,7 +355,7 @@
 </div>
 <div class="ftr-bottom">
 <p style="margin: 0; max-width: 720px">Information on this site describes traditional Unani practice and is general in nature. It is not a diagnosis and does not replace care from your doctor. Herbal products are not intended to diagnose, treat, cure or prevent any disease.</p>
-<p style="margin: 0">© 2026 Heal &amp; Herbs</p>
+<p style="margin: 0; display: flex; flex-wrap: wrap; gap: 6px 16px"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/refunds">Refunds &amp; cancellations</a><a href="/delivery">Delivery</a><span>© 2026 Heal &amp; Herbs</span></p>
 </div>
 </div>
 </footer>

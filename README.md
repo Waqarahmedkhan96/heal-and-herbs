@@ -2,51 +2,55 @@
 
 Website for **Heal & Herbs by Haroon Ur Rasheed, FTJ**: Unani consultations (Google Meet, Zoom or WhatsApp) and herbal formulations delivered across Pakistan.
 
-Static site, no build step. Deployed on Vercel.
+Static HTML/CSS/JS with one serverless function. No build step. Hosted on Vercel.
 
-## Pages
+## Before going live
 
-| Route | File |
+1. **Receive bookings and orders.** In Vercel → Project → Settings → Environment Variables add:
+   - `RESEND_API_KEY` (free account at resend.com, verify your domain)
+   - `NOTIFY_EMAIL` the inbox(es) that should receive bookings, orders and messages (comma separated)
+   - `FROM_EMAIL` e.g. `Heal & Herbs <bookings@yourdomain.com>`
+   - optional `WEBHOOK_URL` to also send every submission to a Google Sheet, Zapier or Make
+
+   Until these are set, submissions are still recorded in the function logs (Vercel → Logs) so nothing is lost.
+2. **Clinic WhatsApp.** Set `whatsapp` in `HH_CONFIG` at the top of `assets/common.js` (digits only, e.g. `923001234567`). Customers then get a one-tap "Send on WhatsApp" after booking or ordering.
+3. **Fill in the details** shown in `[BRACKETS]` across the pages: phone, email, address, hours, registration number, ingredients, pack sizes and policy periods. Search the repo for `[`.
+4. **Domain.** Add it in Vercel → Project → Settings → Domains, then replace `https://heal-and-herbs.vercel.app` with your domain in the HTML files, `sitemap.xml` and `robots.txt`.
+5. **Policies.** Review `privacy.html`, `terms.html`, `refunds.html` and `delivery.html` with your own adviser.
+
+## How payments and availability work today
+
+- `HH_CONFIG.paymentsLive = false`: booking and checkout collect a request and the payment method the customer prefers. Nothing is charged online; the clinic confirms and sends payment details (JazzCash, Easypaisa, bank or card link). Cash on delivery works as normal.
+- When a payment gateway is connected, set `paymentsLive: true` and redirect to the gateway in the `confirm` (book) and `place` (cart) handlers.
+- All consultation times are shown as available. To block taken times, fill `HH_BUSY` in `assets/pages/book.js` or connect a calendar (Google Calendar / Cal.com) behind `hhBusy()`.
+- The server recalculates every price from `api/_catalog.json`; a changed price in the browser is never trusted.
+
+## Editing
+
+| What | Where |
 | --- | --- |
-| `/` | `index.html` — home, shop, consultation pricing, FAQ |
-| `/about` | `about.html` |
-| `/book` | `book.html` — 4-step consultation booking |
-| `/cart` | `cart.html` — basket and checkout |
-| `/contact` | `contact.html` |
-| `/cedar`, `/meher`, `/saath`, `/fennel-rose`, `/golden-root`, `/mint-garden` | product pages |
+| Products, prices, tags | `HH_PRODUCTS` in `assets/common.js` **and** `api/_catalog.json` |
+| Consultation prices, hours, closed days | top of `assets/pages/book.js` (and `api/_catalog.json`) |
+| Delivery fee / free-delivery threshold | top of `assets/pages/cart.js` (and `api/_catalog.json`) |
+| Colours, type, components | `assets/site.css` |
+
+Each page holds pre-rendered HTML for fast first paint and search engines, plus a `<template id="view">` the page script renders from. `assets/view.js` is the small view layer (`{{holes}}`, `<hh-if>`, `<hh-for>`, `onclick="{{handler}}"`).
 
 ## Structure
 
 ```
-assets/
-  site.css         design tokens and components (mobile first)
-  view.js          small view layer: {{holes}}, <hh-if>, <hh-for>, event binding
-  common.js        product catalogue, prices, basket storage, shared header/footer logic
-  pages/*.js       one script per page
-images/            photography, product cut-outs, icons
-vercel.json        clean URLs, caching and security headers
+index.html, about.html, book.html, cart.html, contact.html
+cedar.html, meher.html, saath.html, fennel-rose.html, golden-root.html, mint-garden.html
+privacy.html, terms.html, refunds.html, delivery.html, 404.html
+api/submit.js        bookings, orders and messages → email / webhook
+api/_catalog.json    server-side prices
+assets/              site.css, view.js, common.js, pages/*.js
+images/              photography, product cut-outs, icons, social images
+vercel.json          clean URLs, caching, security headers (CSP, HSTS)
 ```
-
-Each page contains pre-rendered HTML (fast first paint, indexable) plus a `<template id="view">` that the page script renders from once loaded.
-
-## Editing
-
-- **Products and prices:** `HH_PRODUCTS` at the top of `assets/common.js`.
-- **Consultation prices, hours, closed days, payment methods:** top of `assets/pages/book.js`.
-- **Delivery fee and free-delivery threshold:** top of `assets/pages/cart.js`.
-- Text in `[BRACKETS]` is waiting for real details (phone, email, address, registration number, ingredients).
-
-## Going live with payments and bookings
-
-Booking and checkout run fully in the browser today. To take real payments and bookings, connect:
-
-1. A payment gateway (JazzCash / Easypaisa / card) at the `confirm` and `place` handlers.
-2. The clinic calendar (Google Calendar or Cal.com) in place of `hhBusy()` in `book.js`.
-3. Zoom / Google Meet APIs to create meeting links on confirmation.
-4. An order backend or Shopify for fulfilment.
 
 ## Local preview
 
 ```
-npx serve .
+npx vercel dev
 ```

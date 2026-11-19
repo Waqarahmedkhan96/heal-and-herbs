@@ -1,0 +1,36 @@
+{
+  "consultations": {
+    "30": 4999,
+    "60": 9999
+  },
+  "shipping": {
+    "flat": 250,
+    "freeOver": 5000
+  },
+  "products": {
+    "cedar": {
+      "name": "Cedar",
+      "price": 3499
+    },
+    "meher": {
+      "name": "Meher",
+      "price": 3499
+    },
+    "saath": {
+      "name": "Saath Duo Set",
+      "price": 6499
+    },
+    "fennel": {
+      "name": "Fennel & Rose",
+      "price": 1450
+    },
+    "golden": {
+      "name": "Golden Root",
+      "price": 1850
+    },
+    "mint": {
+      "name": "Mint Garden",
+      "price": 1250
+    }
+  }
+}

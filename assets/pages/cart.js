@@ -44,14 +44,25 @@ class Page extends View {
       eName: err.eName || '', hasEName: !!err.eName, ePhone: err.ePhone || '', hasEPhone: !!err.ePhone, eAddr: err.eAddr || '', hasEAddr: !!err.eAddr,
       hasErrors: Object.keys(err).length > 0,
       payments: PAYMENTS.map(function (p) { var on = s.pay === p.id; return { name: p.name, desc: p.desc, cls: on ? 'opt on' : 'opt', checked: on ? 'true' : 'false', pick: function () { self.setState({ pay: p.id }); } }; }),
-      placeLabel: s.pay === 'cod' ? 'Place order · ' + hhPkr(total) : 'Pay ' + hhPkr(total) + ' with ' + (payObj ? payObj.name : ''),
+      placeLabel: s.sending ? 'Placing order…' : (s.pay === 'cod' || !HH_CONFIG.paymentsLive) ? 'Place order · ' + hhPkr(total) : 'Pay ' + hhPkr(total) + ' with ' + (payObj ? payObj.name : ''),
+      sending: !!s.sending, hp: s.hp || '', onHp: function (e) { self.setState({ hp: e.target.value }); },
+      payNote: (s.pay === 'cod' || HH_CONFIG.paymentsLive) ? '' : 'Nothing is charged now — we send ' + (payObj ? payObj.name : '') + ' payment details to confirm your order.', hasPayNote: s.pay !== 'cod' && !HH_CONFIG.paymentsLive,
+      hasOrderWa: !!s.orderWa, orderWa: s.orderWa || '', placedNote: s.orderPay === 'cod' || HH_CONFIG.paymentsLive ? 'We’ll send updates by SMS' : 'We’ll send payment details shortly; your order ships once payment is received. Updates by SMS',
       place: function () {
         if (Object.keys(self._errors(s)).length) { self.setState({ tried: true }); return; }
-        // Production: POST the order, then redirect to the payment gateway for non-COD methods.
         var ref = 'HHO-' + Date.now().toString(36).toUpperCase().slice(-6);
         var t = hhPkr(total);
-        self._put('hh_cart', {});
-        self.setState({ placed: true, ref: ref, orderTotal: t });
+        var lines = Object.keys(cart).filter(function (k) { return HH_PRODUCTS[k] && cart[k] > 0; }).map(function (k) { return { id: k, qty: Number(cart[k]) }; });
+        var order = { ref: ref, items: lines, subtotal: subtotal, shipping: shipping, total: total, payment: payObj ? payObj.name : '',
+          name: s.name.trim(), phone: s.phone.trim(), email: (s.email || '').trim(), city: s.city, address: s.address.trim(), hp: s.hp || '' };
+        self.setState({ sending: true });
+        // With a gateway connected (HH_CONFIG.paymentsLive), redirect non-COD orders to it here.
+        self._submit('order', order).then(function () {
+          self._put('hh_cart', {});
+          self.setState({ sending: false, placed: true, ref: ref, orderTotal: t, orderPay: s.pay,
+            orderWa: self._waUrl('Order ' + ref + '\n' + lines.map(function (l) { return l.qty + ' × ' + HH_PRODUCTS[l.id].name; }).join('\n') + '\nTotal: ' + t + '\nPayment: ' + (payObj ? payObj.name : '') + '\n' + s.name + ', ' + s.phone + '\n' + s.address + ', ' + s.city) });
+          try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {}
+        });
       },
       ref: s.ref || '', orderTotal: s.orderTotal || '', receiptTo: s.email ? ' and email ' + s.email : ''
     });

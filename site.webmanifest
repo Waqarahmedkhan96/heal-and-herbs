@@ -1,0 +1,20 @@
+{
+  "name": "Heal & Herbs",
+  "short_name": "Heal & Herbs",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F4EB",
+  "theme_color": "#193E33",
+  "icons": [
+    {
+      "src": "/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -25,7 +25,9 @@ var STEPS = ['Call type', 'Date & time', 'Your details', 'Payment'];
 
 function hhHash(str) { var h = 0; for (var i = 0; i < str.length; i++) { h = (h * 31 + str.charCodeAt(i)) | 0; } return Math.abs(h); }
 // Demo availability: replace with the clinic's calendar API (busy = true).
-function hhBusy(dayKey, minute) { return hhHash(dayKey + '@' + minute) % 4 === 0; }
+// Connect the clinic calendar here: return true when dayKey (YYYY-MM-DD) at minute-of-day (PKT) is taken.
+var HH_BUSY = {};
+function hhBusy(dayKey, minute) { return !!HH_BUSY[dayKey + '@' + minute]; }
 function hhTime(min) { return hhPad(Math.floor(min / 60)) + ':' + hhPad(min % 60); }
 function hhDays() {
   var out = []; var nowPk = new Date(Date.now() + PKT_OFFSET_H * 3600e3);
@@ -101,7 +103,7 @@ class Page extends View {
       var st0 = new Date(hhUtc(day, s.slot)), en0 = new Date(hhUtc(day, s.slot) + dur * 60e3);
       calUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('Consultation with Haroon Ur Rasheed (' + (plat ? plat.name : '') + ')') + '&dates=' + hhGcal(st0) + '/' + hhGcal(en0) + '&details=' + encodeURIComponent('Heal & Herbs booking ' + (s.ref || '') + '. ' + (plat && plat.id === 'whatsapp' ? 'Haroon will call your WhatsApp number.' : 'Join with the link in your confirmation email.'));
     }
-    var nextSteps = !plat ? '' : plat.id === 'whatsapp'
+    var nextSteps = !plat ? '' : !HH_CONFIG.paymentsLive ? 'Next: we confirm your time and share payment details. ' + (plat.id === 'whatsapp' ? 'At the booked time Haroon calls you on WhatsApp at ' + s.phone + '.' : 'Once paid, your ' + plat.name + ' link is emailed to ' + s.email + '.') : plat.id === 'whatsapp'
       ? 'Keep WhatsApp open at the booked time — Haroon will call you on ' + s.phone + '. If you miss the call, he will message you to reconnect.'
       : 'Your ' + plat.name + ' link will be emailed to ' + s.email + ' and sent on WhatsApp 1 hour before the call. Test your camera and microphone beforehand.';
 
@@ -128,6 +130,16 @@ class Page extends View {
       payments: PAYMENTS.map(function (p) { var on = s.pay === p.id; return { name: p.name, desc: p.desc, cls: on ? 'opt on' : 'opt', checked: on ? 'true' : 'false', pick: function () { self._set({ pay: p.id }); } }; }),
       sumPlan: plan ? plan.label : '—', sumPlatform: plat ? plat.name : '—', sumWhen: when, total: total,
       payName: payObj ? payObj.name : '', ref: s.ref || '', firstName: (s.name || '').trim().split(' ')[0],
+      hp: s.hp || '', onHp: function (e) { self._set({ hp: e.target.value }); }, sending: !!s.sending,
+      payTitle: HH_CONFIG.paymentsLive ? 'Payment' : 'How would you like to pay?',
+      payNote: HH_CONFIG.paymentsLive ? 'Your slot is held for 10 minutes while you pay.' : 'Nothing is charged now. Once your time is confirmed, we send payment details for the method you choose. Your booking is final when payment is received.',
+      confirmLabel: s.sending ? 'Sending…' : (HH_CONFIG.paymentsLive ? 'Pay ' + total + ' & confirm' : 'Request booking · ' + total),
+      doneTitle: HH_CONFIG.paymentsLive ? 'You’re booked, ' + (s.name || '').trim().split(' ')[0] + '.' : 'Request received, ' + (s.name || '').trim().split(' ')[0] + '.',
+      doneNote: s.delivered === false ? 'We couldn’t send your request automatically. Please ' + (HH_CONFIG.whatsapp ? 'send it on WhatsApp below' : 'call or WhatsApp the clinic') + ' with this reference.' : HH_CONFIG.paymentsLive ? 'A confirmation is on its way' + (plat && plat.needsEmail ? ' to ' + s.email : ' on WhatsApp') + '.'
+        : 'We’ll confirm your time and send payment details within ' + HH_CONFIG.responseTime + (HH_CONFIG.whatsapp ? '. For a faster reply, send your request on WhatsApp too.' : '.'),
+      paidLabel: HH_CONFIG.paymentsLive ? 'Paid' : 'To pay',
+      hasWa: !!HH_CONFIG.whatsapp && !!s.done,
+      waUrl: self._waUrl('Booking request ' + (s.ref || '') + '\n' + (plan ? plan.label : '') + ' on ' + (plat ? plat.name : '') + '\n' + when + ' (PKT)\nName: ' + (s.name || '') + '\nPhone: ' + (s.phone || '') + '\nPayment: ' + (payObj ? payObj.name : '')),
       sentTo: plat && plat.needsEmail ? ' to ' + s.email : ' on WhatsApp', nextSteps: nextSteps, calUrl: calUrl,
       next: function () {
         var e = self._errors(step, s);
@@ -138,10 +150,16 @@ class Page extends View {
       confirm: function () {
         var e = self._errors(4, s);
         if (Object.keys(e).length) { self._set({ tried: tried() }); return; }
-        // Production: create a payment intent, redirect to the gateway, and confirm the slot on success.
         var ref = 'HH-' + Date.now().toString(36).toUpperCase().slice(-6);
-        self._set({ done: true, ref: ref });
-        self._put('hh_pref', null);
+        var payload = { ref: ref, duration: dur, price: plan.price, platform: plat.name, date: day.key, time: hhTime(s.slot), timezone: 'Asia/Karachi',
+          name: s.name.trim(), phone: s.phone.trim(), email: (s.email || '').trim(), topic: s.topic, notes: s.notes, payment: payObj ? payObj.name : '', hp: s.hp || '' };
+        self._set({ sending: true });
+        // With a gateway connected (HH_CONFIG.paymentsLive), redirect to it here and confirm on its callback.
+        self._submit('booking', payload).then(function (ok) {
+          self._set({ sending: false, done: true, ref: ref, delivered: ok });
+          self._put('hh_pref', null);
+          try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {}
+        });
       },
       restart: function () { self.setState({ step: 1, done: false, slot: null, dayKey: null, ref: null, tried: {} }); }
     };
