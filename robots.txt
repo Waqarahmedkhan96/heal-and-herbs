@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://heal-and-herbs.vercel.app/sitemap.xml
